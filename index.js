@@ -16,6 +16,9 @@ app.use(cors());
 // routes
 app.use('/posts', postRoutes);
 
+// Msg
+app.get('/', (req, res) => res.send('weebok API'));
+
 // mongoose
 mongoose
   .connect(process.env.CONNECTION_URL, {
