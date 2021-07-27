@@ -1,25 +1,45 @@
+/*
+ *
+ ======= import and initialize dependencies =======
+ *
+*/
 import express from 'express';
-import bodyParser from 'body-parser';
+const app = express();
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import postRoutes from './routes/postRoutes.js'; // main route
-
-const PORT = process.env.PORT || 5000;
 dotenv.config();
-// express
-const app = express();
-app.use(bodyParser.json({ limit: '30mb', extended: true }));
-app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
+const PORT = process.env.PORT || 5000;
+
+/*
+ *
+ ======= configure express middleware ========
+ *
+*/
+app.use(express.json({ limit: '30mb', extended: true }));
+app.use(express.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
 
-// routes
-app.use('/posts', postRoutes);
-
-// Msg
+/*
+ *
+ ========== greetings from weebook =============
+ *
+*/
 app.get('/', (req, res) => res.send('weebok API'));
 
-// mongoose
+/*
+ *
+ ========== import and use routes =============
+ *
+*/
+import postRoutes from './routes/postRoutes.js';
+app.use('/posts', postRoutes);
+
+/*
+ *
+ ======== connect dB and start server =============
+ *
+*/
 mongoose
   .connect(process.env.CONNECTION_URL, {
     useNewUrlParser: true,

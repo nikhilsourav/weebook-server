@@ -1,13 +1,26 @@
+/*
+ *
+ ======= import dependencies =======
+ *
+*/
 import express from 'express';
 const router = express.Router();
 
-// import from controllers
-import { getPosts, createPost, updatePost, deletePost, likePost } from './controllers.js';
+import {
+  getPosts,
+  createPost,
+  updatePost,
+  deletePost,
+  likePost,
+} from '../controllers/controllers.js';
 
-// middleware
 import auth from '../middleware/auth.js';
 
-// All routes
+/*
+ *
+ ======= all routes =======
+ *
+*/
 router.get('/', getPosts);
 router.post('/', auth, createPost);
 router.patch('/:id', auth, updatePost);
