@@ -48,7 +48,7 @@ export const updatePost = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');
 
   const updatedPost = await PostModel.findByIdAndUpdate(_id, { ...post, _id }, { new: true });
-  res.json(updatedPost);
+  res.status(204).json(updatedPost);
 };
 
 /*
@@ -63,7 +63,7 @@ export const deletePost = async (req, res) => {
 
   await PostModel.findByIdAndRemove(id);
 
-  res.json({ message: `Post deleted successfully!` });
+  res.status(202).json({ message: `Post deleted successfully!` });
 };
 
 /*
@@ -74,7 +74,7 @@ export const deletePost = async (req, res) => {
 export const likePost = async (req, res) => {
   const { id } = req.params;
 
-  if (!req.userId) return res.json({ msg: 'User not authenticated' });
+  if (!req.userId) return res.status(401).json({ msg: 'User not authenticated' });
 
   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that id');
 
@@ -86,5 +86,5 @@ export const likePost = async (req, res) => {
   else post.likes = post.likes.filter((id) => id !== String(req.userId));
 
   const updatedPost = await PostModel.findByIdAndUpdate(id, post, { new: true });
-  res.json(updatedPost);
+  res.status(204).json(updatedPost);
 };

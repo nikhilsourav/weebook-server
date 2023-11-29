@@ -41,10 +41,6 @@ app.use('/posts', postRoutes);
  *
 */
 mongoose
-  .connect(process.env.CONNECTION_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-  })
-  .then(() => app.listen(PORT, console.log(`server running on port ${PORT}`)))
-  .catch((e) => console.log(e, `db connection error`));
+  .connect(process.env.CONNECTION_URL, { dbName: process.env.DB_NAME })
+  .then(() => app.listen(PORT, console.log(`server running on http://localhost:${PORT}`)))
+  .catch((e) => console.log(`Unable to connect to database: ${e}`));
